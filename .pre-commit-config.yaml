@@ -1,0 +1,43 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-symlinks
+      - id: mixed-line-ending
+        exclude_types: [diff]
+      - id: check-case-conflict
+      - id: fix-byte-order-marker
+      - id: trailing-whitespace
+        exclude_types: [diff, svg]
+      - id: end-of-file-fixer
+        exclude_types: [diff]
+      - id: no-commit-to-branch
+        args: ["--branch", "main"]
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.14
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.1
+    hooks:
+      - id: codespell
+        types_or: [python, rst, markdown]
+        args: ["--ignore-words=.codespell-ignore"]
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.19.1
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - numpy
+          - types-chardet
+          - types-requests
+          - types-tabulate
+          - typing_extensions
+          - types-PyYAML

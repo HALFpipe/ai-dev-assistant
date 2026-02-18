@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-dev-assistant"
+version = "0.1.0"
+description = "AI-powered developer assistant for code understanding, debugging, and reasoning"
+requires-python = ">=3.11"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pyright]
+typeCheckingMode = "off"
+
+[tool.ruff]
+line-length = 127
+
+[tool.ruff.lint]
+select = [
+    "F", # pyflakes
+    "E", # pycodestyle
+    "W", # pycodestyle
+    "I", # isort
+    "B", # bugbears
+    "N", # pep8-naming
+]
+
+[tool.setuptools_scm]
+version_scheme = "no-guess-dev"
+
