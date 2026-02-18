@@ -1,7 +1,10 @@
 # infra/embeddings.py
 from __future__ import annotations
+
 from typing import List
+
 from openai import OpenAI
+
 from .config import EMBEDDING_MODEL
 
 _client: OpenAI | None = None
@@ -31,7 +34,7 @@ def embed_texts(
     vectors: List[List[float]] = []
 
     for i in range(0, len(texts), batch_size):
-        batch = texts[i:i + batch_size]
+        batch = texts[i : i + batch_size]
         response = client.embeddings.create(
             model=model,
             input=batch,

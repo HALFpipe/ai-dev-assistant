@@ -18,20 +18,15 @@ import ast
 from pathlib import Path
 from typing import Iterable
 
-from .schema import CodeChunk
-from .ast_utils import iter_real_functions, is_overload_function
-
+from .ast_utils import is_overload_function, iter_real_functions
 from .overviews import (
-    build_project_overview,
-    build_module_overview,
     build_class_overview,
     build_function_overview,
     build_method_overview,
+    build_module_overview,
+    build_project_overview,
 )
-
-
-
-
+from .schema import CodeChunk
 
 
 def chunk_project_overview(repo_root: Path) -> CodeChunk:
@@ -48,12 +43,10 @@ def chunk_project_overview(repo_root: Path) -> CodeChunk:
     )
 
 
-
-
-
 # ============================================================
 # FILE-LEVEL CHUNKING (AST-based, code-bearing)
 # ============================================================
+
 
 def chunk_python_file(path: Path) -> Iterable[CodeChunk]:
     code = path.read_text(encoding="utf-8", errors="ignore")
@@ -105,7 +98,7 @@ def chunk_python_file(path: Path) -> Iterable[CodeChunk]:
             file=str(path),
             type="class",
             symbol=node.name,
-            text=ast.get_source_segment(code, node),
+            text=ast.get_source_segment(code, node) or "",
         )
 
         for item in node.body:
@@ -128,14 +121,13 @@ def chunk_python_file(path: Path) -> Iterable[CodeChunk]:
                 file=str(path),
                 type="method",
                 symbol=f"{node.name}.{item.name}",
-                text=ast.get_source_segment(code, item),
+                text=ast.get_source_segment(code, item) or "",
             )
 
     # --------------------------------------------------
     # STANDALONE FUNCTIONS (IMPORTANT PART)
     # --------------------------------------------------
     for func in iter_real_functions(tree):
-
         yield CodeChunk(
             id=f"{path}::{func.name}::overview",
             file=str(path),
@@ -149,6 +141,5 @@ def chunk_python_file(path: Path) -> Iterable[CodeChunk]:
             file=str(path),
             type="function",
             symbol=func.name,
-            text=ast.get_source_segment(code, func),
+            text=ast.get_source_segment(code, func) or "",
         )
-

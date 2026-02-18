@@ -1,13 +1,14 @@
 # rag/cost.py
 from __future__ import annotations
+
 import tiktoken
 
 from ai_dev_assistant.infra.config import EMBEDDING_PRICES_PER_1M, LLM_PRICES_PER_1M
 
-
 # ============================================================
 # TOKEN COUNTING
 # ============================================================
+
 
 def count_tokens(texts: list[str], model: str) -> int:
     enc = tiktoken.encoding_for_model(model)
@@ -17,6 +18,7 @@ def count_tokens(texts: list[str], model: str) -> int:
 # ============================================================
 # EMBEDDING COST
 # ============================================================
+
 
 def estimate_embedding_cost(
     texts: list[str],
@@ -30,6 +32,7 @@ def estimate_embedding_cost(
 # ============================================================
 # LLM COST
 # ============================================================
+
 
 def estimate_llm_cost(
     prompt: str,

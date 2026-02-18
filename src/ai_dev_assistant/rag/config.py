@@ -1,20 +1,17 @@
 # rag/config.py
 from __future__ import annotations
-import os
-from .modes import ConversationMode
 
+import os
+
+from .modes import ConversationMode
 
 # ===============================
 # Limits / budgets (future-safe)
 # ===============================
 
-MAX_MONTHLY_BUDGET_EUR = float(
-    os.environ.get("RAG_MAX_MONTHLY_BUDGET_EUR", "5.0")
-)
+MAX_MONTHLY_BUDGET_EUR = float(os.environ.get("RAG_MAX_MONTHLY_BUDGET_EUR", "5.0"))
 
-EXPECTED_LLM_OUTPUT_TOKENS = int(
-    os.environ.get("RAG_EXPECTED_OUTPUT_TOKENS", "400")
-)
+EXPECTED_LLM_OUTPUT_TOKENS = int(os.environ.get("RAG_EXPECTED_OUTPUT_TOKENS", "400"))
 
 
 # --------------------------------------------------

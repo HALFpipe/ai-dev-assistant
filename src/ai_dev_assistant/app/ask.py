@@ -20,16 +20,16 @@ Rule:
 "ask.py answers: give me the final answer."
 """
 
-
 # services/ask.py
 from __future__ import annotations
+
 from typing import Dict
 
 from ai_dev_assistant.rag.config import DEFAULT_MODE
+from ai_dev_assistant.rag.context import ContextOptions, build_context
 from ai_dev_assistant.rag.modes import ConversationMode, get_mode_policy
-from ai_dev_assistant.services.search import search_query
 from ai_dev_assistant.services.explain import explain_query
-from ai_dev_assistant.rag.context import build_context, ContextOptions
+from ai_dev_assistant.services.search import search_query
 
 
 def ask(
@@ -37,7 +37,7 @@ def ask(
     k: int = 5,
     mode: str | None = None,
     *,
-    memory: str | None = None,   # NEW
+    memory: str | None = None,  # NEW
 ) -> Dict:
     """
     High-level API entrypoint.
@@ -73,8 +73,8 @@ def ask(
     # ----------------------------
     try:
         resolved_mode = ConversationMode(mode) if mode else DEFAULT_MODE
-    except ValueError:
-        raise ValueError(f"Unknown conversation mode: {mode}")
+    except ValueError as err:
+        raise ValueError(f"Unknown conversation mode: {mode}") from err
 
     policy = get_mode_policy(resolved_mode)
 
@@ -116,7 +116,6 @@ def ask(
     results = [(r["chunk_id"], r["score"]) for r in chunks]
     context = build_context(results, options)
 
-
     # ----------------------------
     # Explanation (optional)
     # ----------------------------
@@ -124,8 +123,8 @@ def ask(
         explain_query(
             query=query,
             context=context,
-            mode=resolved_mode,     # NEW (mode, not directive)
-            memory=memory,          # NEW
+            mode=resolved_mode,  # NEW (mode, not directive)
+            memory=memory,  # NEW
         )
         if policy.use_llm
         else None

@@ -1,6 +1,7 @@
 # build_vector_store.py
 
 import json
+
 from ai_dev_assistant.infra.vector_store import VectorStore
 from ai_dev_assistant.rag.config import VECTOR_DIM
 

@@ -1,7 +1,8 @@
 import ast
 from pathlib import Path
 from typing import Dict
-from .ast_utils import iter_real_functions, is_overload_function
+
+from .ast_utils import is_overload_function, iter_real_functions
 
 # ============================================================
 # HELPERS
@@ -33,9 +34,6 @@ def format_function_signature(func: ast.FunctionDef) -> str:
         parts.append(f"**{func.args.kwarg.arg}")
 
     return f"{func.name}({', '.join(parts)})"
-
-
-
 
 
 def format_package_tree(tree: Dict[str, dict], indent: int = 0) -> list[str]:
@@ -70,6 +68,7 @@ IGNORE_DIRS = {
 
 MAX_DEPTH = 4
 
+
 def walk_python_packages(base: Path, depth: int = 0) -> Dict[str, dict]:
     """
     Recursively walk Python package directories and build
@@ -98,9 +97,11 @@ def walk_python_packages(base: Path, depth: int = 0) -> Dict[str, dict]:
 
     return tree
 
+
 # ============================================================
 # PROJECT-LEVEL CHUNKING (filesystem-based)
 # ============================================================
+
 
 def build_project_overview(repo_root: Path) -> str:
     """
@@ -123,10 +124,10 @@ def build_project_overview(repo_root: Path) -> str:
     return "\n".join(lines).strip()
 
 
-
 # ============================================================
 # MODULE-LEVEL STRUCTURAL OVERVIEW (AST-based, summary only)
 # ============================================================
+
 
 def build_module_overview(path: Path, tree: ast.Module) -> str:
     """
@@ -202,15 +203,16 @@ def build_module_overview(path: Path, tree: ast.Module) -> str:
 
     return "\n".join(lines).strip()
 
+
 # ============================================================
 # CLASS-LEVEL STRUCTURAL OVERVIEW (AST-based, summary only)
 # ============================================================
+
 
 def build_class_overview(
     module_path: Path,
     class_node: ast.ClassDef,
 ) -> str:
-
     """
     Build a compact structural overview of a class.
 
@@ -236,16 +238,16 @@ def build_class_overview(
     # Base classes (inheritance)
     # --------------------------------------------------
     bases: list[str] = []
-    for base in class_node.bases:
-        if isinstance(base, ast.Name):
-            bases.append(base.id)
-        elif isinstance(base, ast.Attribute):
-            bases.append(ast.unparse(base))
+    for base_expr in class_node.bases:
+        if isinstance(base_expr, ast.Name):
+            bases.append(base_expr.id)
+        elif isinstance(base_expr, ast.Attribute):
+            bases.append(ast.unparse(base_expr))
 
     if bases:
         lines.append("Inherits from:")
-        for base in bases:
-            lines.append(f"- {base}")
+        for base_name in bases:
+            lines.append(f"- {base_name}")
         lines.append("")
 
     # --------------------------------------------------
@@ -292,10 +294,10 @@ def build_class_overview(
     return "\n".join(lines).strip()
 
 
-
 # ============================================================
 # METHOD-LEVEL STRUCTURAL OVERVIEW (AST-based, summary only)
 # ============================================================
+
 
 def build_method_overview(
     path: Path,
@@ -337,10 +339,10 @@ def build_method_overview(
     return "\n".join(lines)
 
 
-
 # ============================================================
 # FUNCTION-LEVEL STRUCTURAL OVERVIEW (AST-based, summary only)
 # ============================================================
+
 
 def build_function_overview(
     path: Path,

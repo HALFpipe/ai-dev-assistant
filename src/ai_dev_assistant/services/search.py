@@ -20,10 +20,10 @@ Rule:
 
 from typing import Dict
 
-from ai_dev_assistant.rag.semantic_search import search
+from ai_dev_assistant.infra.config import DRY_RUN, EMBEDDING_MODEL
 from ai_dev_assistant.infra.embeddings import embed_query
 from ai_dev_assistant.rag.cost import estimate_embedding_cost
-from ai_dev_assistant.infra.config import DRY_RUN, EMBEDDING_MODEL
+from ai_dev_assistant.rag.semantic_search import search
 
 
 def search_query(
@@ -76,10 +76,7 @@ def search_query(
 
     return {
         "query": query,
-        "chunks": [
-            {"chunk_id": cid, "score": score}
-            for cid, score in results
-        ],
+        "chunks": [{"chunk_id": cid, "score": score} for cid, score in results],
         "dry_run": False,
         "cost": {
             "embedding_tokens": tokens,

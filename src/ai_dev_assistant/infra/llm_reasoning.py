@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from openai import OpenAI
+
 from .config import LLM_MODEL
 
 _client: OpenAI | None = None
@@ -30,9 +31,7 @@ def build_prompt(
     parts: list[str] = []
 
     # System framing
-    parts.append(
-        "You are a senior engineer helping a teammate understand a codebase."
-    )
+    parts.append("You are a senior engineer helping a teammate understand a codebase.")
 
     # Mode-specific reasoning style
     parts.append(conversational_directive)
@@ -51,13 +50,9 @@ def build_prompt(
     parts.append(query)
 
     # Instruction
-    parts.append(
-        "\nAnswer clearly and directly, as in a code review discussion."
-    )
+    parts.append("\nAnswer clearly and directly, as in a code review discussion.")
 
     return "\n".join(parts).strip()
-
-
 
 
 def explain_llm(
@@ -78,12 +73,9 @@ def explain_llm(
     return response.choices[0].message.content
 
 
-
-
 # from openai import OpenAI
 # from rag.cost import estimate_llm_cost, LLM_PRICES_PER_1M
 # import os
-
 
 
 #

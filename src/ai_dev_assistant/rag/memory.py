@@ -22,8 +22,7 @@ DESIGN RULES
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Optional, Literal, TypedDict
-
+from typing import List, Literal, Optional, TypedDict
 
 # ============================================================
 # TYPES
@@ -47,6 +46,7 @@ class ConversationState(TypedDict):
     summary: Optional[str]
     recent_turns: List[ConversationTurn]
 
+
 # ============================================================
 # HELPERS
 # ============================================================
@@ -65,9 +65,11 @@ def turn_from_dict(data: dict) -> ConversationTurn:
         content=data["content"],
     )
 
+
 # ============================================================
 # INITIALIZATION
 # ============================================================
+
 
 def init_conversation() -> ConversationState:
     return {
@@ -79,6 +81,7 @@ def init_conversation() -> ConversationState:
 # ============================================================
 # MEMORY UPDATES
 # ============================================================
+
 
 def append_turn(
     state: ConversationState,
@@ -97,6 +100,7 @@ def append_turn(
 # SUMMARIZATION POLICY
 # ============================================================
 
+
 def needs_summarization(
     state: ConversationState,
     max_turns: int = 6,
@@ -108,16 +112,14 @@ def needs_summarization(
 # SUMMARIZATION
 # ============================================================
 
+
 def build_summarization_prompt(
     summary: Optional[str],
     turns: List[ConversationTurn],
 ) -> str:
     previous_summary = summary or "None"
 
-    dialogue = "\n".join(
-        f"{ROLE_LABELS[t.role]}: {t.content}"
-        for t in turns
-    )
+    dialogue = "\n".join(f"{ROLE_LABELS[t.role]}: {t.content}" for t in turns)
 
     return f"""
 You are summarizing a technical conversation between a user and an assistant.
@@ -150,6 +152,7 @@ def apply_summary(
 # ============================================================
 # CONTEXT EXPORT
 # ============================================================
+
 
 def build_memory_context(state: ConversationState) -> str:
     parts: List[str] = []

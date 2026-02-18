@@ -1,8 +1,9 @@
 # rag/semantic_search.py
 from __future__ import annotations
-from typing import List, Tuple
-from ai_dev_assistant.infra.vector_store import VectorStore
 
+from typing import List, Tuple
+
+from ai_dev_assistant.infra.vector_store import VectorStore
 
 
 def search(

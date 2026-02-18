@@ -19,10 +19,9 @@ Rule:
 "context.py answers: what exactly should the LLM see?"
 """
 
-
 from typing import Dict, List
 
-from ai_dev_assistant.rag.context import build_context, ContextOptions
+from ai_dev_assistant.rag.context import ContextOptions, build_context
 from ai_dev_assistant.rag.modes import ConversationMode, get_mode_policy
 
 

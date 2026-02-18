@@ -2,6 +2,7 @@
 
 import ast
 
+
 def is_overload_function(func: ast.FunctionDef) -> bool:
     for decorator in func.decorator_list:
         if isinstance(decorator, ast.Name) and decorator.id == "overload":

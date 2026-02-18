@@ -7,8 +7,8 @@ with proper multiline rendering.
 
 import json
 from pathlib import Path
-import yaml
 
+import yaml
 
 JSON_INPUT = Path("../../../data/chunks.json")
 YAML_OUTPUT = Path("../../../data/chunks.preview.yaml")

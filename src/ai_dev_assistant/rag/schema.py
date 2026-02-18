@@ -62,4 +62,3 @@ class CodeChunk:
     # - embedded
     # - shown to ChatGPT
     text: str
-

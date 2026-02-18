@@ -1,5 +1,5 @@
+from ai_dev_assistant.rag.memory import append_turn, init_conversation, needs_summarization
 
-from ai_dev_assistant.rag.memory import init_conversation, append_turn, needs_summarization
 
 def test_memory_summarization_trigger():
     state = init_conversation()

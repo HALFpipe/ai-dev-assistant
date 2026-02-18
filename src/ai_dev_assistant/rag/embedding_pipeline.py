@@ -1,17 +1,14 @@
-#rag/embedding_pipeline.py
+# rag/embedding_pipeline.py
 from __future__ import annotations
 
-from typing import Iterable, List, Dict
-
-from openai import OpenAI
-from tqdm import tqdm
-from ai_dev_assistant.rag.schema import CodeChunk
-import tiktoken
+from typing import Dict, Iterable, List
 
 from ai_dev_assistant.infra.embeddings import embed_texts
-from .embedding_policy import iter_embeddable_chunks
-from .cost import estimate_embedding_cost
+from ai_dev_assistant.rag.schema import CodeChunk
+
 from .config import EMBEDDING_MODEL
+from .cost import estimate_embedding_cost
+from .embedding_policy import iter_embeddable_chunks
 
 
 # ============================================================
@@ -28,13 +25,11 @@ def batched(iterable, batch_size: int):
         yield batch
 
 
-
 def embed_chunks(
     chunks: Iterable[CodeChunk],
     model: str = EMBEDDING_MODEL,
     dry_run: bool = False,
 ) -> List[Dict]:
-
     chunks = list(chunks)
     embeddable = list(iter_embeddable_chunks(chunks))
 
@@ -83,5 +78,5 @@ def embed_chunks(
             "embedding": vector,
             "text": chunk.text,
         }
-        for chunk, vector in zip(embeddable, vectors)
+        for chunk, vector in zip(embeddable, vectors, strict=True)
     ]

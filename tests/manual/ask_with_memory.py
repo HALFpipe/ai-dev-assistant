@@ -13,12 +13,12 @@ Run this multiple times with the same conversation_id
 to observe memory accumulation and summarization.
 """
 
-from ai_dev_assistant.app.ask_with_memory import ask_with_memory
-from ai_dev_assistant.rag.modes import ConversationMode
 from utils import print_answer
 
+from ai_dev_assistant.app.ask_with_memory import ask_with_memory
+from ai_dev_assistant.rag.modes import ConversationMode
 
-CONVERSATION_ID = "demo-fmriprep-memory"   # stable ID for testing
+CONVERSATION_ID = "demo-fmriprep-memory"  # stable ID for testing
 MODE = ConversationMode.DOCUMENTATION.value
 
 

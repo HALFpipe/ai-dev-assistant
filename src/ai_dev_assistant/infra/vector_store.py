@@ -6,9 +6,8 @@ from typing import Iterable, List, Tuple
 
 import faiss
 import numpy as np
-from ai_dev_assistant.tools.defaults import FAISS_META_FILE, FAISS_INDEX_FILE
 
-
+from ai_dev_assistant.tools.defaults import FAISS_INDEX_FILE, FAISS_META_FILE
 
 # ============================================================
 # CONFIG
@@ -21,6 +20,7 @@ META_PATH = FAISS_META_FILE
 # ============================================================
 # VECTOR STORE
 # ============================================================
+
 
 class VectorStore:
     """
@@ -80,6 +80,7 @@ class VectorStore:
                 indent=2,
             )
         )
+
     @classmethod
     def load(cls) -> "VectorStore":
         if not INDEX_PATH.exists() or not META_PATH.exists():
@@ -115,7 +116,7 @@ class VectorStore:
 
         results: list[Tuple[str, float]] = []
 
-        for idx, score in zip(indices[0], scores[0]):
+        for idx, score in zip(indices[0], scores[0], strict=True):
             if idx < 0:
                 continue
             results.append((self.ids[idx], float(score)))

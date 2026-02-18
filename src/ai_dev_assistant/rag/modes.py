@@ -18,10 +18,8 @@ They are stored per conversation and affect:
 - answer style
 """
 
-from enum import Enum
 from dataclasses import dataclass
-
-
+from enum import Enum
 
 
 class ConversationMode(str, Enum):
@@ -66,12 +64,10 @@ MODE_POLICIES: dict[ConversationMode, ModePolicy] = {
         expand_inheritance_depth=0,
         inject_project_overview=False,
         conversational_directive=(
-            "Locate relevant code elements and report where they are defined. "
-            "Do not explain behavior unless explicitly asked."
+            "Locate relevant code elements and report where they are defined. Do not explain behavior unless explicitly asked."
         ),
         description="Fast semantic search for code locations.",
     ),
-
     ConversationMode.DOCUMENTATION: ModePolicy(
         use_retrieval=True,
         use_llm=True,
@@ -84,7 +80,6 @@ MODE_POLICIES: dict[ConversationMode, ModePolicy] = {
         ),
         description="Generate documentation-style explanations.",
     ),
-
     ConversationMode.DEBUGGING: ModePolicy(
         use_retrieval=True,
         use_llm=True,
@@ -92,12 +87,10 @@ MODE_POLICIES: dict[ConversationMode, ModePolicy] = {
         expand_inheritance_depth=2,
         inject_project_overview=False,
         conversational_directive=(
-            "Explain runtime behavior, edge cases, and failure modes. "
-            "Focus on why things happen and what could go wrong."
+            "Explain runtime behavior, edge cases, and failure modes. Focus on why things happen and what could go wrong."
         ),
         description="Reason about bugs, crashes, and unexpected behavior.",
     ),
-
     ConversationMode.CODING: ModePolicy(
         use_retrieval=True,
         use_llm=True,
@@ -105,13 +98,10 @@ MODE_POLICIES: dict[ConversationMode, ModePolicy] = {
         expand_inheritance_depth=1,
         inject_project_overview=False,
         conversational_directive=(
-            "Provide concrete implementation guidance. "
-            "Use code snippets where appropriate. "
-            "Avoid vague advice."
+            "Provide concrete implementation guidance. Use code snippets where appropriate. Avoid vague advice."
         ),
         description="Assist with writing or modifying code.",
     ),
-
     ConversationMode.ARCHITECTURE: ModePolicy(
         use_retrieval=True,
         use_llm=True,
@@ -119,34 +109,26 @@ MODE_POLICIES: dict[ConversationMode, ModePolicy] = {
         expand_inheritance_depth=3,
         inject_project_overview=True,
         conversational_directive=(
-            "Explain system structure and interactions between components. "
-            "Focus on design intent and data flow."
+            "Explain system structure and interactions between components. Focus on design intent and data flow."
         ),
         description="High-level system and architectural explanations.",
     ),
-
     ConversationMode.EXPLORATION: ModePolicy(
         use_retrieval=True,
         use_llm=True,
         prefer_full_code=False,
         expand_inheritance_depth=0,
         inject_project_overview=True,
-        conversational_directive=(
-            "Explore the codebase and explain relevant parts clearly. "
-            "Balance overview with detail."
-        ),
+        conversational_directive=("Explore the codebase and explain relevant parts clearly. Balance overview with detail."),
         description="General-purpose exploratory mode.",
     ),
-
     ConversationMode.FULL: ModePolicy(
         use_retrieval=True,
         use_llm=True,
         prefer_full_code=True,
         expand_inheritance_depth=3,
         inject_project_overview=True,
-        conversational_directive=(
-            "Full details"
-        ),
+        conversational_directive=("Full details"),
         description="Full detailed mode",
     ),
 }
@@ -163,8 +145,4 @@ def list_modes() -> dict[str, str]:
     """
     Return available modes with descriptions (useful for UI).
     """
-    return {
-        mode.value: policy.description
-        for mode, policy in MODE_POLICIES.items()
-    }
-
+    return {mode.value: policy.description for mode, policy in MODE_POLICIES.items()}

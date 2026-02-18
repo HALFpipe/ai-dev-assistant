@@ -44,25 +44,19 @@ def configure_logging(level: str = "INFO"):
         processors=[
             # Add ISO-8601 timestamp to every log event
             structlog.processors.TimeStamper(fmt="iso"),
-
             # Add log level (info, warning, error, etc.)
             structlog.processors.add_log_level,
-
             # Optionally include stack info when requested
             structlog.processors.StackInfoRenderer(),
-
             # Render exceptions in structured form
             structlog.processors.format_exc_info,
-
             # Final renderer: convert event dict to JSON
             structlog.processors.JSONRenderer(),
         ],
         # Use stdlib logging under the hood
         logger_factory=structlog.stdlib.LoggerFactory(),
-
         # Enable .bind() for contextual loggers
         wrapper_class=structlog.stdlib.BoundLogger,
-
         # Cache loggers for performance
         cache_logger_on_first_use=True,
     )

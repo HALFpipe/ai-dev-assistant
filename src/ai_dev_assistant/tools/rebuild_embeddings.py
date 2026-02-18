@@ -2,9 +2,9 @@
 import json
 from pathlib import Path
 
-from ai_dev_assistant.rag.schema import CodeChunk
-from ai_dev_assistant.rag.embedding_pipeline import embed_chunks
 from ai_dev_assistant.infra.config import DRY_RUN
+from ai_dev_assistant.rag.embedding_pipeline import embed_chunks
+from ai_dev_assistant.rag.schema import CodeChunk
 
 DATA_DIR = Path("../../../data")
 CHUNKS_FILE = DATA_DIR / "chunks.json"
@@ -26,9 +26,7 @@ def main() -> None:
     if records:
         print(f"Embedded {len(records)} chunks")
 
-        EMBEDDINGS_FILE.write_text(
-            json.dumps(records, indent=2)
-        )
+        EMBEDDINGS_FILE.write_text(json.dumps(records, indent=2))
 
         print(f"Wrote embeddings to {EMBEDDINGS_FILE}")
 

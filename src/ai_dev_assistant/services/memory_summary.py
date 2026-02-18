@@ -17,14 +17,14 @@ It does NOT:
 - format UI output
 """
 
+from ai_dev_assistant.infra.config import DRY_RUN, LLM_MODEL
+from ai_dev_assistant.infra.llm_reasoning import explain_llm
 from ai_dev_assistant.rag.memory import (
     ConversationState,
-    needs_summarization,
-    build_summarization_prompt,
     apply_summary,
+    build_summarization_prompt,
+    needs_summarization,
 )
-from ai_dev_assistant.infra.llm_reasoning import explain_llm
-from ai_dev_assistant.infra.config import DRY_RUN, LLM_MODEL
 
 
 def maybe_summarize(

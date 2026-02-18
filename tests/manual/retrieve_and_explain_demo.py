@@ -1,12 +1,6 @@
 """
 tests/manual/retrieve_and_explain_demo.py
-End-to-end retrieval + explanation smoke test.
 
-- Semantic search
-- Context expansion
-- LLM explanation
-"""
-"""
 Manual retrieval + context + LLM explanation sanity check.
 
 - Semantic search
@@ -15,11 +9,12 @@ Manual retrieval + context + LLM explanation sanity check.
 - LLM explanation
 """
 
-from ai_dev_assistant.services.search import search_query
+from utils import print_answer
+
+from ai_dev_assistant.rag.modes import ConversationMode
 from ai_dev_assistant.services.context import build_query_context
 from ai_dev_assistant.services.explain import explain_query
-from ai_dev_assistant.rag.modes import ConversationMode
-from utils import print_answer
+from ai_dev_assistant.services.search import search_query
 
 QUERY = "How does FmriprepAdapterFactory work?"
 TOP_K = 5
@@ -59,6 +54,7 @@ def main():
     )
 
     print_answer(answer)
+
 
 if __name__ == "__main__":
     main()

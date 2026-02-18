@@ -15,7 +15,7 @@ from ai_dev_assistant.rag.chunking import (
     chunk_project_overview,
     chunk_python_file,
 )
-from ai_dev_assistant.tools.defaults import DEFAULT_REPO_ROOT, CHUNKS_FILE
+from ai_dev_assistant.tools.defaults import CHUNKS_FILE, DEFAULT_REPO_ROOT
 
 
 def index_repo(
@@ -48,6 +48,7 @@ def index_repo(
 # ------------------------------------------------------------
 # DIRECT EXECUTION (HUMAN DEFAULTS)
 # ------------------------------------------------------------
+
 
 def main() -> None:
     index_repo(
