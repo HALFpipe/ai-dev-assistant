@@ -19,7 +19,7 @@ from ai_dev_assistant.services.search import search_query
 from ai_dev_assistant.services.context import build_query_context
 from ai_dev_assistant.services.explain import explain_query
 from ai_dev_assistant.rag.modes import ConversationMode
-from tests.manual.utils import print_answer
+from utils import print_answer
 
 QUERY = "How does FmriprepAdapterFactory work?"
 TOP_K = 5

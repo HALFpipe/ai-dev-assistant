@@ -15,7 +15,7 @@ to observe memory accumulation and summarization.
 
 from ai_dev_assistant.app.ask_with_memory import ask_with_memory
 from ai_dev_assistant.rag.modes import ConversationMode
-from tests.manual.utils import print_answer
+from utils import print_answer
 
 
 CONVERSATION_ID = "demo-fmriprep-memory"   # stable ID for testing
