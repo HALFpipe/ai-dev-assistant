@@ -312,7 +312,7 @@ By making modes explicit:
 * UIs can present clear choices
 
 In the future, UIs *may* suggest modes —
-but the mode will always remain visible and overrideable.
+but the mode will always remain visible and overridable.
 
 
 ---
@@ -792,5 +792,3 @@ This project is intentionally:
 * **Grounded** over hallucinated
 
 It treats LLMs as **reasoning engines**, not oracles.
-
-

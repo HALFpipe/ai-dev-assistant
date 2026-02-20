@@ -13,13 +13,10 @@ Pure pipeline step:
 from __future__ import annotations
 
 import json
+
 import yaml
 
-from ai_dev_assistant.tools.defaults import (
-    get_chunks_path,
-    get_yaml_preview_path,
-    get_active_repo_name
-)
+from ai_dev_assistant.tools.defaults import get_active_repo_name, get_chunks_path, get_yaml_preview_path
 
 
 class LiteralString(str):
@@ -62,11 +59,7 @@ def main() -> None:
     yaml_path = get_yaml_preview_path()
 
     if not chunks_path.exists():
-        raise RuntimeError(
-            f"No chunks.json found for active repo.\n"
-            f"Expected at: {chunks_path}\n"
-            f"Run index_repo first."
-        )
+        raise RuntimeError(f"No chunks.json found for active repo.\nExpected at: {chunks_path}\nRun index_repo first.")
 
     data = json.loads(chunks_path.read_text(encoding="utf-8"))
     data = convert_multiline_strings(data)
@@ -83,6 +76,7 @@ def main() -> None:
     )
 
     print(f"YAML preview written to {yaml_path}")
+
 
 if __name__ == "__main__":
     main()

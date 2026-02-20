@@ -21,17 +21,15 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from ai_dev_assistant.tools.rebuild_embeddings import main as rebuild_embeddings
 from ai_dev_assistant.tools.defaults import (
-    set_active_repo_name,
     repo_name_from_path,
+    set_active_repo_name,
 )
+from ai_dev_assistant.tools.rebuild_embeddings import main as rebuild_embeddings
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Rebuild embeddings for an indexed repository."
-    )
+    parser = argparse.ArgumentParser(description="Rebuild embeddings for an indexed repository.")
 
     parser.add_argument(
         "--repo",

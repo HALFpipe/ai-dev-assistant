@@ -3,8 +3,10 @@
 import json
 import sqlite3
 from typing import Optional
+
+from ai_dev_assistant.rag.memory import ConversationState, turn_from_dict, turn_to_dict
 from ai_dev_assistant.tools.defaults import get_memory_db_path
-from ai_dev_assistant.rag.memory import ConversationState, turn_to_dict, turn_from_dict
+
 
 def _serialize_state(state: ConversationState) -> dict:
     return {
@@ -12,14 +14,12 @@ def _serialize_state(state: ConversationState) -> dict:
         "recent_turns": [turn_to_dict(t) for t in state["recent_turns"]],
     }
 
+
 def _deserialize_state(raw: dict) -> ConversationState:
     return {
         "summary": raw.get("summary"),
-        "recent_turns": [
-            turn_from_dict(t) for t in raw.get("recent_turns", [])
-        ],
+        "recent_turns": [turn_from_dict(t) for t in raw.get("recent_turns", [])],
     }
-
 
 
 def _get_conn() -> sqlite3.Connection:
@@ -51,7 +51,6 @@ def load_conversation(conversation_id: str) -> Optional[ConversationState]:
 
     raw = json.loads(row[0])
     return _deserialize_state(raw)
-
 
 
 def save_conversation(

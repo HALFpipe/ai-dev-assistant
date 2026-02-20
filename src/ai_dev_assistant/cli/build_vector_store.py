@@ -23,15 +23,13 @@ from pathlib import Path
 
 from ai_dev_assistant.tools.build_vector_store import main as build_vector_store
 from ai_dev_assistant.tools.defaults import (
-    set_active_repo_name,
     repo_name_from_path,
+    set_active_repo_name,
 )
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Build FAISS vector store for an indexed repository."
-    )
+    parser = argparse.ArgumentParser(description="Build FAISS vector store for an indexed repository.")
 
     parser.add_argument(
         "--repo",

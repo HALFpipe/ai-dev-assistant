@@ -19,21 +19,19 @@ from __future__ import annotations
 import argparse
 
 from ai_dev_assistant.rag.modes import ConversationMode
-from ai_dev_assistant.services.search import search_query
 from ai_dev_assistant.services.context import build_query_context
 from ai_dev_assistant.services.explain import explain_query
-from ai_dev_assistant.tools.utils import print_answer
+from ai_dev_assistant.services.search import search_query
 from ai_dev_assistant.tools.defaults import (
     get_active_repo_name,
-    set_active_repo_name,
     get_repo_dir,
+    set_active_repo_name,
 )
+from ai_dev_assistant.tools.utils import print_answer
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Ask a question about an indexed repository."
-    )
+    parser = argparse.ArgumentParser(description="Ask a question about an indexed repository.")
 
     parser.add_argument(
         "query",
@@ -79,21 +77,15 @@ def resolve_repo(repo_arg: str | None) -> str:
     if repo_arg:
         repo_dir = get_repo_dir(repo_arg)
         if not repo_dir.exists():
-            raise RuntimeError(
-                f"Repository '{repo_arg}' is not indexed.\n"
-                "Run init_data or index_repo first."
-            )
+            raise RuntimeError(f"Repository '{repo_arg}' is not indexed.\nRun init_data or index_repo first.")
         set_active_repo_name(repo_arg)
         return repo_arg
 
     # fallback to last active
     try:
         return get_active_repo_name()
-    except RuntimeError:
-        raise RuntimeError(
-            "No active repository.\n"
-            "Run init_data or specify --repo <name>."
-        )
+    except RuntimeError as err:
+        raise RuntimeError("No active repository.\nRun init_data or specify --repo <name>.") from err
 
 
 def main() -> None:

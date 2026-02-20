@@ -1,19 +1,20 @@
 # tests/confest.py
 # tests/conftest.py
 import shutil
-import pytest
 from pathlib import Path
 
-from ai_dev_assistant.tools.defaults import (
-    set_active_repo_name,
-    repo_name_from_path,
-    get_repo_dir,
-)
+import pytest
 
+from ai_dev_assistant.tools.defaults import (
+    get_repo_dir,
+    repo_name_from_path,
+    set_active_repo_name,
+)
 
 # --------------------------------------------------
 # A) Repo under test (input)
 # --------------------------------------------------
+
 
 @pytest.fixture
 def mini_repo(tmp_path) -> Path:
@@ -31,6 +32,7 @@ def mini_repo(tmp_path) -> Path:
 # B) Isolated assistant workspace
 # --------------------------------------------------
 
+
 @pytest.fixture
 def isolated_data_root(tmp_path, monkeypatch) -> Path:
     """Empty assistant workspace."""
@@ -43,10 +45,10 @@ def isolated_data_root(tmp_path, monkeypatch) -> Path:
     return data_root
 
 
-
 # --------------------------------------------------
 # C) Precomputed data installed (no OpenAI needed)
 # --------------------------------------------------
+
 
 @pytest.fixture
 def precomputed_mini_repo(mini_repo, isolated_data_root):
@@ -62,9 +64,11 @@ def precomputed_mini_repo(mini_repo, isolated_data_root):
 
     return repo_name
 
+
 # --------------------------------------------------
 # D) Active repository context
 # --------------------------------------------------
+
 
 @pytest.fixture
 def active_repo_name(mini_repo, isolated_data_root) -> str:
@@ -74,4 +78,3 @@ def active_repo_name(mini_repo, isolated_data_root) -> str:
     repo_name = repo_name_from_path(mini_repo)
     set_active_repo_name(repo_name)
     return repo_name
-

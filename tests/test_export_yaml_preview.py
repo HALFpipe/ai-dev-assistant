@@ -1,10 +1,10 @@
 # tests/test_export_yaml_preview
 # tests/test_export_yaml_preview.py
 
-from ai_dev_assistant.tools.export_yaml_preview import main as export_yaml_preview
 from ai_dev_assistant.tools.defaults import (
     get_yaml_preview_path,
 )
+from ai_dev_assistant.tools.export_yaml_preview import main as export_yaml_preview
 
 
 def test_export_yaml_preview(precomputed_mini_repo):

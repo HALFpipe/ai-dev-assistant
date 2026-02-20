@@ -24,10 +24,7 @@ def embed_texts(
     client = get_ai_client()
 
     if client is None:
-        raise RuntimeError(
-            "Embedding requested in dry-run mode.\n"
-            "This should have been skipped earlier."
-        )
+        raise RuntimeError("Embedding requested in dry-run mode.\nThis should have been skipped earlier.")
 
     vectors: List[List[float]] = []
 

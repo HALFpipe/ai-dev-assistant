@@ -16,24 +16,22 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from ai_dev_assistant.tools.index_repo import index_repo
-from ai_dev_assistant.tools.rebuild_embeddings import main as rebuild_embeddings
 from ai_dev_assistant.tools.build_vector_store import main as build_vector_store
-from ai_dev_assistant.tools.export_yaml_preview import main as export_yaml_preview
 from ai_dev_assistant.tools.defaults import (
     repo_name_from_path,
     set_active_repo_name,
 )
-
+from ai_dev_assistant.tools.export_yaml_preview import main as export_yaml_preview
+from ai_dev_assistant.tools.index_repo import main as index_repo
+from ai_dev_assistant.tools.rebuild_embeddings import main as rebuild_embeddings
 
 # ------------------------------------------------------------
 # CLI
 # ------------------------------------------------------------
 
+
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Initialize assistant data for a repository."
-    )
+    parser = argparse.ArgumentParser(description="Initialize assistant data for a repository.")
 
     parser.add_argument(
         "--repo",
@@ -48,6 +46,7 @@ def parse_args() -> argparse.Namespace:
 # ------------------------------------------------------------
 # PIPELINE
 # ------------------------------------------------------------
+
 
 def main() -> None:
     args = parse_args()

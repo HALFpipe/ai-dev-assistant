@@ -17,7 +17,7 @@ from ai_dev_assistant.services.explain import explain_query
 from ai_dev_assistant.services.search import search_query
 
 # QUERY = "How does FmriprepAdapterFactory work?"
-QUERY = "How is the TotalReadoutTime field in the json fmap sidecar file suplied to the recreated rawdata structure"
+QUERY = "How is the TotalReadoutTime field in the json fmap sidecar file supplied to the recreated rawdata structure"
 
 TOP_K = 5
 

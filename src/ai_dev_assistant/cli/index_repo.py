@@ -17,13 +17,11 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from ai_dev_assistant.tools.index_repo import index_repo
+from ai_dev_assistant.tools.index_repo import main as index_repo
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Index a Python repository into structural code chunks."
-    )
+    parser = argparse.ArgumentParser(description="Index a Python repository into structural code chunks.")
 
     parser.add_argument(
         "--repo",

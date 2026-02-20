@@ -1,7 +1,10 @@
 # infra/openai_client.py
 from __future__ import annotations
+
 import os
+
 from openai import OpenAI
+
 from ai_dev_assistant.infra.config import is_dry_run
 
 _client: OpenAI | None = None

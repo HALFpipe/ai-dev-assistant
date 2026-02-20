@@ -23,7 +23,7 @@ from __future__ import annotations
 
 from typing import Dict
 
-from ai_dev_assistant.infra.config import is_dry_run, LLM_MODEL
+from ai_dev_assistant.infra.config import LLM_MODEL, is_dry_run
 from ai_dev_assistant.infra.llm_reasoning import build_prompt, explain_llm
 from ai_dev_assistant.rag.cost import estimate_llm_cost
 from ai_dev_assistant.rag.modes import ConversationMode, get_mode_policy

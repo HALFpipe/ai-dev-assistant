@@ -17,7 +17,7 @@ It does NOT:
 - format UI output
 """
 
-from ai_dev_assistant.infra.config import is_dry_run, LLM_MODEL
+from ai_dev_assistant.infra.config import LLM_MODEL, is_dry_run
 from ai_dev_assistant.infra.llm_reasoning import explain_llm
 from ai_dev_assistant.rag.memory import (
     ConversationState,

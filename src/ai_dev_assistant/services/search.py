@@ -20,7 +20,7 @@ Rule:
 
 from typing import Dict
 
-from ai_dev_assistant.infra.config import is_dry_run, EMBEDDING_MODEL
+from ai_dev_assistant.infra.config import EMBEDDING_MODEL, is_dry_run
 from ai_dev_assistant.infra.embeddings import embed_query
 from ai_dev_assistant.rag.cost import estimate_embedding_cost
 from ai_dev_assistant.rag.semantic_search import search

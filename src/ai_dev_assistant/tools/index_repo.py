@@ -9,6 +9,7 @@ This is a pure pipeline step:
 - no env parsing
 - no interactive defaults
 """
+
 from __future__ import annotations
 
 import json
@@ -24,7 +25,7 @@ from ai_dev_assistant.tools.defaults import (
 )
 
 
-def index_repo(*, repo_root: Path) -> None:
+def main(*, repo_root: Path) -> None:
     """
     Index a repository into the assistant workspace.
 
@@ -37,7 +38,7 @@ def index_repo(*, repo_root: Path) -> None:
     if not repo_root.exists():
         raise RuntimeError(f"Repository does not exist: {repo_root}")
 
-    repo_name = repo_root.name   # ← stable, intentional
+    repo_name = repo_root.name  # ← stable, intentional
 
     print(f"Indexing repo '{repo_name}'")
 

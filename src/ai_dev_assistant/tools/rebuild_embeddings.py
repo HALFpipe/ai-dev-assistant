@@ -15,21 +15,19 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from ai_dev_assistant.rag.schema import CodeChunk
+from ai_dev_assistant.infra.config import is_dry_run
 from ai_dev_assistant.rag.embedding_pipeline import embed_chunks
+from ai_dev_assistant.rag.schema import CodeChunk
 from ai_dev_assistant.tools.defaults import (
+    get_active_repo_name,
     get_chunks_path,
     get_embeddings_path,
-    get_active_repo_name,
 )
-from ai_dev_assistant.infra.config import is_dry_run
+
 
 def load_chunks(path: Path) -> list[CodeChunk]:
     if not path.exists():
-        raise RuntimeError(
-            f"Chunks file not found: {path}\n"
-            "Did you run index_repo first?"
-        )
+        raise RuntimeError(f"Chunks file not found: {path}\nDid you run index_repo first?")
 
     raw = json.loads(path.read_text())
     return [CodeChunk(**item) for item in raw]
@@ -57,4 +55,3 @@ def main() -> None:
 
     print(f"Embedded {len(records)} chunks")
     print(f"Wrote embeddings to {embeddings_path}")
-

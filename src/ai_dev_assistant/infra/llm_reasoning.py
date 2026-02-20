@@ -1,9 +1,9 @@
 # rag/llm_reasoning.py
 from __future__ import annotations
 
+from ai_dev_assistant.infra.ai_client import get_ai_client
 
 from .config import LLM_MODEL
-from ai_dev_assistant.infra.ai_client import get_ai_client
 
 
 def build_prompt(
@@ -59,11 +59,9 @@ def explain_llm(
     if client is None:
         return "[DRY RUN]"
 
-
     response = client.chat.completions.create(
         model=model,
         messages=[{"role": "user", "content": prompt}],
     )
 
     return response.choices[0].message.content
-

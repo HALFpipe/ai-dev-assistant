@@ -16,24 +16,20 @@ import json
 from ai_dev_assistant.infra.vector_store import VectorStore
 from ai_dev_assistant.rag.config import VECTOR_DIM
 from ai_dev_assistant.tools.defaults import (
+    get_active_repo_name,
     get_embeddings_path,
     get_faiss_index_path,
     get_faiss_meta_path,
-    get_active_repo_name
 )
 
 
 def main() -> None:
-
     print(f"Building vector store for '{get_active_repo_name()}'")
 
     embeddings_path = get_embeddings_path()
 
     if not embeddings_path.exists():
-        raise RuntimeError(
-            "Embeddings file not found.\n"
-            "Run rebuild_embeddings first."
-        )
+        raise RuntimeError("Embeddings file not found.\nRun rebuild_embeddings first.")
 
     records = json.loads(embeddings_path.read_text())
 

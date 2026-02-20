@@ -1,4 +1,5 @@
-from .factory import Factory
+from .adapter import Factory
+
 
 class AdapterFactory(Factory):
     def get(self, name: str):

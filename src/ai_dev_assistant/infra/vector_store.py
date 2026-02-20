@@ -9,7 +9,6 @@ import numpy as np
 
 from ai_dev_assistant.tools.defaults import get_faiss_index_path, get_faiss_meta_path
 
-
 # ============================================================
 # VECTOR STORE
 # ============================================================

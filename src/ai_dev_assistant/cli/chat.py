@@ -14,19 +14,19 @@ Exit with Ctrl+C or 'exit'.
 """
 
 from __future__ import annotations
-import readline  # noqa: F401
+
 import argparse
+import readline  # noqa: F401
 import uuid
 
 from ai_dev_assistant.app.ask_with_memory import ask_with_memory
 from ai_dev_assistant.rag.modes import ConversationMode
-from ai_dev_assistant.tools.utils import print_answer
 from ai_dev_assistant.tools.defaults import get_active_repo_name
+from ai_dev_assistant.tools.utils import print_answer
+
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Interactive conversational RAG with memory."
-    )
+    parser = argparse.ArgumentParser(description="Interactive conversational RAG with memory.")
 
     parser.add_argument(
         "--conversation-id",

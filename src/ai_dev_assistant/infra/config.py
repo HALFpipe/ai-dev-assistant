@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 
+
 # ===============================
 # Execution mode
 # ===============================
@@ -15,6 +16,8 @@ def is_dry_run() -> bool:
     - Pipelines still execute structurally
     """
     return os.getenv("AI_DEV_ASSISTANT_DRY_RUN", "0") == "1"
+
+
 # ===============================
 # Models
 # ===============================
