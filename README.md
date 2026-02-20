@@ -106,11 +106,6 @@ Answer
 
 If using conversational mode, memory is appended and optionally summarized.
 
----
-Great, this fits very cleanly into the README.
-Below is a **drop-in README section** that explains **conversation modes**, why they exist, and how they differ — written to match your actual implementation and philosophy.
-
-You can paste this after the “How it works” or “Typical usage” section.
 
 ---
 
@@ -319,19 +314,7 @@ By making modes explicit:
 In the future, UIs *may* suggest modes —
 but the mode will always remain visible and overrideable.
 
----
 
-If you want, next we can:
-
-* add a `--list-modes` CLI command
-* expose mode policies in JSON for UI use
-* add examples per mode in the README
-* tighten prompt directives per mode
-* add per-mode cost controls
-
-Just tell me what you want to refine next.
-
----
 ---
 
 ## 1. How the memory system works (conceptual explanation)
@@ -521,15 +504,17 @@ This cleanly separates:
 ### Why this design is strong
 
 ✅ Bounded memory (no runaway prompts)
+
 ✅ Explicit summarization policy
+
 ✅ Testable without OpenAI
+
 ✅ Persistent across CLI runs
+
 ✅ Easy to swap storage backend
+
 ✅ Easy to add alternative summarizers
 
-
-
----
 
 ---
 
@@ -686,6 +671,90 @@ python -m ai_dev_assistant.cli.inspect_repo "adapter factory"
 ```
 
 Useful when you want **zero AI calls**.
+
+
+---
+
+## OpenAI usage and approximate costs
+
+This project uses OpenAI models for:
+
+- **Embeddings** (semantic search over your repository)
+- **LLM reasoning** (explanations, debugging, documentation, summaries)
+
+You must provide your own OpenAI API key to enable these features.
+
+### Setting your OpenAI API key
+
+Export your key as an environment variable:
+
+```bash
+export OPENAI_API_KEY=sk-...
+````
+
+To make this permanent, add it to your shell config (`~/.bashrc`, `~/.zshrc`, etc.).
+
+The assistant will fail fast with a clear error message if the key is missing and an AI call is required.
+
+---
+
+### Approximate costs (guidelines, not guarantees)
+
+Costs depend on:
+
+* repository size
+* number of chunks embedded
+* how often you query
+* selected conversation mode
+
+Typical ballpark numbers:
+
+#### Embeddings (one-time per repo version)
+
+* Small repo (few thousand lines): **fractions of a cent**
+* Medium repo (tens of thousands of lines): **a few cents**
+* Large repo: still typically **well under $1**
+
+Embeddings are **cached on disk** and only need to be regenerated when the code changes.
+
+#### LLM queries (per question)
+
+* Most questions cost **a few cents or less**
+* DEBUGGING / FULL modes are more expensive than SEARCH
+* Conversational memory adds minimal overhead due to summarization
+
+The project estimates token usage before embedding and prints the expected cost.
+
+---
+
+### Dry-run mode (no OpenAI required)
+
+For testing, development, or CI, you can disable **all OpenAI calls**:
+
+```bash
+export AI_DEV_ASSISTANT_DRY_RUN=1
+```
+
+In dry-run mode:
+
+* No embeddings are generated
+* No LLM calls are made
+* Pipelines still run end-to-end
+* Tests use precomputed golden data
+
+This makes the project safe and cheap to develop and test locally.
+
+---
+
+### Important note
+
+This project:
+
+* **does not proxy or store your API key**
+* **does not send code unless explicitly embedding or querying**
+* **never makes silent API calls**
+
+All AI usage is explicit, inspectable, and opt-in.
 
 ---
 
