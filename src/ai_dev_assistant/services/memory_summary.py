@@ -17,7 +17,7 @@ It does NOT:
 - format UI output
 """
 
-from ai_dev_assistant.infra.config import DRY_RUN, LLM_MODEL
+from ai_dev_assistant.infra.config import is_dry_run, LLM_MODEL
 from ai_dev_assistant.infra.llm_reasoning import explain_llm
 from ai_dev_assistant.rag.memory import (
     ConversationState,
@@ -50,7 +50,7 @@ def maybe_summarize(
         turns=state["recent_turns"],
     )
 
-    if DRY_RUN:
+    if is_dry_run():
         # In dry run, do NOT modify memory
         return False
 

@@ -3,10 +3,9 @@
 from __future__ import annotations
 
 import json
+from typing import List, Dict
 from dataclasses import dataclass
-from typing import Dict, List
-
-from ai_dev_assistant.tools.defaults import CHUNKS_FILE, EMBEDDINGS_FILE
+from ai_dev_assistant.tools.defaults import get_embeddings_path, get_chunks_path
 
 
 @dataclass(frozen=True)
@@ -14,7 +13,6 @@ class ContextOptions:
     prefer_full_code: bool = False
     expand_inheritance_depth: int = 0
     inject_project_overview: bool = True
-
 
 def extract_parents_from_overview(text: str) -> list[str]:
     """
@@ -39,7 +37,6 @@ def extract_parents_from_overview(text: str) -> list[str]:
 
     return parents
 
-
 def find_parent_overviews(parent_names, emb_by_id):
     """
     Find overview records for parent class names.
@@ -55,24 +52,20 @@ def find_parent_overviews(parent_names, emb_by_id):
 
     return parents
 
-
 # ============================================================
 # LOADERS
 # ============================================================
 
-
 def load_embeddings() -> List[Dict]:
-    return json.loads(EMBEDDINGS_FILE.read_text())
+    return json.loads(get_embeddings_path().read_text())
 
 
 def load_chunks() -> List[Dict]:
-    return json.loads(CHUNKS_FILE.read_text())
-
+    return json.loads(get_chunks_path().read_text())
 
 # ============================================================
 # HELPERS
 # ============================================================
-
 
 def collect_parent_overviews(
     start_overview: dict,
@@ -112,7 +105,6 @@ def collect_parent_overviews(
 # BUILD CONTEXT (Overview + Full Code)
 # ============================================================
 
-
 def build_context(
     results,
     options: ContextOptions,
@@ -132,12 +124,16 @@ def build_context(
     used_ids = set()
 
     for chunk_id, score in results:
+
         overview = emb_by_id.get(chunk_id)
         if not overview:
             continue
         parent_blocks = []
 
-        if options.expand_inheritance_depth > 0 and overview["type"] == "class_overview":
+        if (
+                options.expand_inheritance_depth > 0
+                and overview["type"] == "class_overview"
+        ):
             parent_overviews = collect_parent_overviews(
                 start_overview=overview,
                 emb_by_id=emb_by_id,
@@ -155,7 +151,8 @@ def build_context(
                     used_ids.add(parent_full["id"])
 
                 pb = [
-                    f"[PARENT: {parent['symbol']}]\nFile: {parent['file']}\n",
+                    f"[PARENT: {parent['symbol']}]\n"
+                    f"File: {parent['file']}\n",
                     "\n--- Overview ---\n" + parent["text"],
                 ]
 
@@ -175,12 +172,22 @@ def build_context(
 
         block = []
 
-        block.append(f"[{overview['symbol']}]\nFile: {overview['file']}\nScore: {score:.3f}\n")
+        block.append(
+            f"[{overview['symbol']}]\n"
+            f"File: {overview['file']}\n"
+            f"Score: {score:.3f}\n"
+        )
 
-        block.append("\n--- Overview ---\n" + overview["text"])
+        block.append(
+            "\n--- Overview ---\n"
+            + overview["text"]
+        )
 
         if full and options.prefer_full_code:
-            block.append("\n--- Full Code ---\n" + full["text"])
+            block.append(
+                "\n--- Full Code ---\n"
+                + full["text"]
+            )
 
         context_blocks.extend(parent_blocks)
         context_blocks.append("\n".join(block))
@@ -188,7 +195,10 @@ def build_context(
     final_parts = []
 
     if options.inject_project_overview and project_overview:
-        final_parts.append("================ PROJECT STRUCTURE ================\n\n" + project_overview["text"])
+        final_parts.append(
+            "================ PROJECT STRUCTURE ================\n\n"
+            + project_overview["text"]
+        )
 
     if context_blocks:
         final_parts.append(

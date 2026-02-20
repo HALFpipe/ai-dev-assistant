@@ -5,8 +5,16 @@ import os
 # ===============================
 # Execution mode
 # ===============================
-DRY_RUN: bool = os.environ.get("RAG_DRY_RUN", "0") == "1"
+def is_dry_run() -> bool:
+    """
+    Global dry-run flag.
 
+    When enabled:
+    - No OpenAI calls
+    - No embeddings generated
+    - Pipelines still execute structurally
+    """
+    return os.getenv("AI_DEV_ASSISTANT_DRY_RUN", "0") == "1"
 # ===============================
 # Models
 # ===============================

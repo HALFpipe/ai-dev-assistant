@@ -3,18 +3,9 @@ from __future__ import annotations
 
 from typing import List
 
-from openai import OpenAI
+from ai_dev_assistant.infra.ai_client import get_ai_client
 
 from .config import EMBEDDING_MODEL
-
-_client: OpenAI | None = None
-
-
-def get_client() -> OpenAI:
-    global _client
-    if _client is None:
-        _client = OpenAI()
-    return _client
 
 
 def embed_texts(
@@ -30,7 +21,14 @@ def embed_texts(
     - No printing
     - No DRY_RUN
     """
-    client = get_client()
+    client = get_ai_client()
+
+    if client is None:
+        raise RuntimeError(
+            "Embedding requested in dry-run mode.\n"
+            "This should have been skipped earlier."
+        )
+
     vectors: List[List[float]] = []
 
     for i in range(0, len(texts), batch_size):
@@ -48,7 +46,7 @@ def embed_query(
     query: str,
     model: str = EMBEDDING_MODEL,
 ) -> List[float]:
-    client = get_client()
+    client = get_ai_client()
 
     response = client.embeddings.create(
         model=model,

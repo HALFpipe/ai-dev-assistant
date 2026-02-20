@@ -1,5 +1,5 @@
 """
-tests/manual/retrieve_and_explain_demo.py
+tests/manual/ask_demo.py
 
 Manual retrieval + context + LLM explanation sanity check.
 
@@ -16,7 +16,9 @@ from ai_dev_assistant.services.context import build_query_context
 from ai_dev_assistant.services.explain import explain_query
 from ai_dev_assistant.services.search import search_query
 
-QUERY = "How does FmriprepAdapterFactory work?"
+# QUERY = "How does FmriprepAdapterFactory work?"
+QUERY = "How is the TotalReadoutTime field in the json fmap sidecar file suplied to the recreated rawdata structure"
+
 TOP_K = 5
 
 
@@ -31,7 +33,7 @@ def main():
     # --------------------------------------------------
     context_result = build_query_context(
         search_result["chunks"],
-        mode=ConversationMode.DOCUMENTATION,
+        mode=ConversationMode.DEBUGGING,
     )
 
     context_text = context_result["context"]
@@ -50,7 +52,7 @@ def main():
     answer = explain_query(
         query=QUERY,
         context=context_text,
-        mode=ConversationMode.DOCUMENTATION,
+        mode=ConversationMode.DEBUGGING,
     )
 
     print_answer(answer)

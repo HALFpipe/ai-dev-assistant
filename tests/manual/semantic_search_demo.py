@@ -1,4 +1,6 @@
 """
+tests/manual/semantic_search_demo.py
+
 Manual retrieval sanity check.
 
 - Runs semantic search only

@@ -1,35 +1,60 @@
 # tools/rebuild_embeddings.py
+"""
+Rebuild embeddings for the currently active repository.
+
+Pipeline step:
+- loads chunks.json
+- computes embeddings
+- writes embeddings.json
+
+Repo context is resolved via LAST_ACTIVE_REPO.
+"""
+
+from __future__ import annotations
+
 import json
 from pathlib import Path
 
-from ai_dev_assistant.infra.config import DRY_RUN
-from ai_dev_assistant.rag.embedding_pipeline import embed_chunks
 from ai_dev_assistant.rag.schema import CodeChunk
-
-DATA_DIR = Path("../../../data")
-CHUNKS_FILE = DATA_DIR / "chunks.json"
-EMBEDDINGS_FILE = DATA_DIR / "embeddings.json"
-
+from ai_dev_assistant.rag.embedding_pipeline import embed_chunks
+from ai_dev_assistant.tools.defaults import (
+    get_chunks_path,
+    get_embeddings_path,
+    get_active_repo_name,
+)
+from ai_dev_assistant.infra.config import is_dry_run
 
 def load_chunks(path: Path) -> list[CodeChunk]:
+    if not path.exists():
+        raise RuntimeError(
+            f"Chunks file not found: {path}\n"
+            "Did you run index_repo first?"
+        )
+
     raw = json.loads(path.read_text())
     return [CodeChunk(**item) for item in raw]
 
 
 def main() -> None:
-    chunks = load_chunks(CHUNKS_FILE)
+    chunks_path = get_chunks_path()
+    embeddings_path = get_embeddings_path()
 
-    print(f"Loaded {len(chunks)} chunks")
+    chunks = load_chunks(chunks_path)
 
-    records = embed_chunks(chunks, dry_run=DRY_RUN)
+    print(f"Loaded {len(chunks)} chunks from repo '{get_active_repo_name()}'")
 
-    if records:
-        print(f"Embedded {len(records)} chunks")
+    records = embed_chunks(chunks, dry_run=is_dry_run())
 
-        EMBEDDINGS_FILE.write_text(json.dumps(records, indent=2))
+    if not records:
+        print("No embeddings generated (dry run?)")
+        return
 
-        print(f"Wrote embeddings to {EMBEDDINGS_FILE}")
+    embeddings_path.parent.mkdir(parents=True, exist_ok=True)
+    embeddings_path.write_text(
+        json.dumps(records, indent=2),
+        encoding="utf-8",
+    )
 
+    print(f"Embedded {len(records)} chunks")
+    print(f"Wrote embeddings to {embeddings_path}")
 
-if __name__ == "__main__":
-    main()

@@ -1,4 +1,5 @@
 """
+tests/manual/context_expansion_demo.py
 Manual retrieval + context expansion sanity check.
 
 - Semantic search

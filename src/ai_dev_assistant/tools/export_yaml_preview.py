@@ -1,17 +1,25 @@
 """
-export_yaml_preview.py
+tools.export_yaml_preview
 
 Convert chunks.json into a human-readable YAML preview
 with proper multiline rendering.
+
+Pure pipeline step:
+- no CLI
+- no env parsing
+- repo context resolved via defaults
 """
 
-import json
-from pathlib import Path
+from __future__ import annotations
 
+import json
 import yaml
 
-JSON_INPUT = Path("../../../data/chunks.json")
-YAML_OUTPUT = Path("../../../data/chunks.preview.yaml")
+from ai_dev_assistant.tools.defaults import (
+    get_chunks_path,
+    get_yaml_preview_path,
+    get_active_repo_name
+)
 
 
 class LiteralString(str):
@@ -26,7 +34,7 @@ def literal_str_representer(dumper, data):
     )
 
 
-# IMPORTANT: register for SafeDumper, not default dumper
+# Register for SafeDumper
 yaml.SafeDumper.add_representer(LiteralString, literal_str_representer)
 
 
@@ -45,11 +53,26 @@ def convert_multiline_strings(obj):
 
 
 def main() -> None:
-    data = json.loads(JSON_INPUT.read_text(encoding="utf-8"))
+    """
+    Export YAML preview for the active repository.
+    """
+    print(f"Currently active repo:'{get_active_repo_name()}'")
 
+    chunks_path = get_chunks_path()
+    yaml_path = get_yaml_preview_path()
+
+    if not chunks_path.exists():
+        raise RuntimeError(
+            f"No chunks.json found for active repo.\n"
+            f"Expected at: {chunks_path}\n"
+            f"Run index_repo first."
+        )
+
+    data = json.loads(chunks_path.read_text(encoding="utf-8"))
     data = convert_multiline_strings(data)
 
-    YAML_OUTPUT.write_text(
+    yaml_path.parent.mkdir(parents=True, exist_ok=True)
+    yaml_path.write_text(
         yaml.safe_dump(
             data,
             sort_keys=False,
@@ -59,8 +82,7 @@ def main() -> None:
         encoding="utf-8",
     )
 
-    print(f"YAML preview written to {YAML_OUTPUT}")
-
+    print(f"YAML preview written to {yaml_path}")
 
 if __name__ == "__main__":
     main()

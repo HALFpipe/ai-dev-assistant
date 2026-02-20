@@ -1,4 +1,4 @@
-# services/search.py
+# services/inspect_repo.py
 """
 services.search
 
@@ -15,12 +15,12 @@ It does NOT:
 - call the LLM
 
 Rule:
-"search.py answers: which parts of the codebase are relevant?"
+"inspect_repo.py answers: which parts of the codebase are relevant?"
 """
 
 from typing import Dict
 
-from ai_dev_assistant.infra.config import DRY_RUN, EMBEDDING_MODEL
+from ai_dev_assistant.infra.config import is_dry_run, EMBEDDING_MODEL
 from ai_dev_assistant.infra.embeddings import embed_query
 from ai_dev_assistant.rag.cost import estimate_embedding_cost
 from ai_dev_assistant.rag.semantic_search import search
@@ -60,7 +60,7 @@ def search_query(
     """
     tokens, cost = estimate_embedding_cost([query], model)
 
-    if DRY_RUN:
+    if is_dry_run():
         return {
             "query": query,
             "chunks": [],

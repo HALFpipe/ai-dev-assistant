@@ -7,14 +7,7 @@ from typing import Iterable, List, Tuple
 import faiss
 import numpy as np
 
-from ai_dev_assistant.tools.defaults import FAISS_INDEX_FILE, FAISS_META_FILE
-
-# ============================================================
-# CONFIG
-# ============================================================
-
-INDEX_PATH = FAISS_INDEX_FILE
-META_PATH = FAISS_META_FILE
+from ai_dev_assistant.tools.defaults import get_faiss_index_path, get_faiss_meta_path
 
 
 # ============================================================
@@ -68,10 +61,10 @@ class VectorStore:
     # --------------------------------------------------
 
     def save(self) -> None:
-        INDEX_PATH.parent.mkdir(parents=True, exist_ok=True)
+        get_faiss_index_path().parent.mkdir(parents=True, exist_ok=True)
 
-        faiss.write_index(self.index, str(INDEX_PATH))
-        META_PATH.write_text(
+        faiss.write_index(self.index, str(get_faiss_index_path()))
+        get_faiss_meta_path().write_text(
             json.dumps(
                 {
                     "ids": self.ids,
@@ -83,12 +76,12 @@ class VectorStore:
 
     @classmethod
     def load(cls) -> "VectorStore":
-        if not INDEX_PATH.exists() or not META_PATH.exists():
+        if not get_faiss_index_path().exists() or not get_faiss_meta_path().exists():
             raise FileNotFoundError("FAISS index or metadata not found")
 
-        meta = json.loads(META_PATH.read_text())
+        meta = json.loads(get_faiss_meta_path().read_text())
         store = cls(dim=meta["dim"])
-        store.index = faiss.read_index(str(INDEX_PATH))
+        store.index = faiss.read_index(str(get_faiss_index_path()))
         store.ids = meta["ids"]
 
         return store

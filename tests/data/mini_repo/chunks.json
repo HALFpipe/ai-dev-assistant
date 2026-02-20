@@ -1,0 +1,135 @@
+[
+  {
+    "id": "PROJECT::overview",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo",
+    "type": "project",
+    "symbol": "mini_repo",
+    "text": "Project: mini_repo\nRoot: /home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo\n\nPackage structure:"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/utils.py::module::overview",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/utils.py",
+    "type": "module_overview",
+    "symbol": "utils",
+    "text": "File: /home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/utils.py\nModule: utils\n\nFunctions:\n- helper()"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/utils.py::module",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/utils.py",
+    "type": "module",
+    "symbol": "utils",
+    "text": "def helper():\n    return 42"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/utils.py::helper::overview",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/utils.py",
+    "type": "function_overview",
+    "symbol": "helper",
+    "text": "Function: helper()\nDefined in: /home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/utils.py\n\nReturns: unknown"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/utils.py::helper",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/utils.py",
+    "type": "function",
+    "symbol": "helper",
+    "text": "def helper():\n    return 42"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/__init__.py::module::overview",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/__init__.py",
+    "type": "module_overview",
+    "symbol": "__init__",
+    "text": "File: /home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/__init__.py\nModule: __init__"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/__init__.py::module",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/__init__.py",
+    "type": "module",
+    "symbol": "__init__",
+    "text": ""
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/adapter.py::module::overview",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/adapter.py",
+    "type": "module_overview",
+    "symbol": "adapter",
+    "text": "File: /home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/adapter.py\nModule: adapter\n\nClasses:\n- Factory\n  - get()"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/adapter.py::module",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/adapter.py",
+    "type": "module",
+    "symbol": "adapter",
+    "text": "class Factory:\n    def get(self, name: str):\n        raise NotImplementedError\n"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/adapter.py::Factory::overview",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/adapter.py",
+    "type": "class_overview",
+    "symbol": "Factory",
+    "text": "Class: Factory\nDefined in: /home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/adapter.py\n\nMethods:\n- get(name)"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/adapter.py::Factory",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/adapter.py",
+    "type": "class",
+    "symbol": "Factory",
+    "text": "class Factory:\n    def get(self, name: str):\n        raise NotImplementedError"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/adapter.py::Factory.get::overview",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/adapter.py",
+    "type": "method_overview",
+    "symbol": "Factory.get",
+    "text": "Method: Factory.get(name)\nDefined in: /home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/adapter.py\nClass: Factory\n\nReturns: unknown"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/adapter.py::Factory.get",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/adapter.py",
+    "type": "method",
+    "symbol": "Factory.get",
+    "text": "def get(self, name: str):\n        raise NotImplementedError"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/factory.py::module::overview",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/factory.py",
+    "type": "module_overview",
+    "symbol": "factory",
+    "text": "File: /home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/factory.py\nModule: factory\n\nImports:\n- factory.Factory\n\nClasses:\n- AdapterFactory\n  - get()"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/factory.py::module",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/factory.py",
+    "type": "module",
+    "symbol": "factory",
+    "text": "from .factory import Factory\n\nclass AdapterFactory(Factory):\n    def get(self, name: str):\n        return f\"adapter:{name}\"\n"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/factory.py::AdapterFactory::overview",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/factory.py",
+    "type": "class_overview",
+    "symbol": "AdapterFactory",
+    "text": "Class: AdapterFactory\nDefined in: /home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/factory.py\n\nInherits from:\n- Factory\n\nMethods:\n- get(name)"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/factory.py::AdapterFactory",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/factory.py",
+    "type": "class",
+    "symbol": "AdapterFactory",
+    "text": "class AdapterFactory(Factory):\n    def get(self, name: str):\n        return f\"adapter:{name}\""
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/factory.py::AdapterFactory.get::overview",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/factory.py",
+    "type": "method_overview",
+    "symbol": "AdapterFactory.get",
+    "text": "Method: AdapterFactory.get(name)\nDefined in: /home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/factory.py\nClass: AdapterFactory\n\nReturns: unknown"
+  },
+  {
+    "id": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/factory.py::AdapterFactory.get",
+    "file": "/home/tomas/github/ai_dev_assistant/tests/fixtures/mini_repo/factory.py",
+    "type": "method",
+    "symbol": "AdapterFactory.get",
+    "text": "def get(self, name: str):\n        return f\"adapter:{name}\""
+  }
+]
